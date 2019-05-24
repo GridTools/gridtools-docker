@@ -38,5 +38,5 @@ echo "${build_type^^}. ${float_type^^}. ${grid_type^^}" | cowsay
 python3 /gridtools/pyutils/driver.py -vv build -b $build_type -p $float_type -g $grid_type -o $build_dir -i $install_dir -t perftests
 
 if [[ -z "$CUDACXX" ]]; then
-    $build_dir/pyutils/driver.py -vv test --build-examples --perftests-only
+    $build_dir/pyutils/driver.py -vv test --perftests-only
 fi
