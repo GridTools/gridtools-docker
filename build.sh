@@ -6,12 +6,16 @@ set -e
 docker build -t $1:base base
 
 # GCC
-docker build --build-arg REPOSITORY=$1 --build-arg GCC_VERSION=9 -t $1:gcc-9 gcc
-docker build --build-arg REPOSITORY=$1 --build-arg BASE=gcc-9 -t $1:test-gcc-9 test
+for version in 7 8 9; do
+    docker build --build-arg REPOSITORY=$1 --build-arg GCC_VERSION=$version -t $1:gcc-$version gcc
+    docker build --build-arg REPOSITORY=$1 --build-arg BASE=gcc-$version -t $1:test-gcc-$version test
+done
 
 # Clang
-docker build --build-arg REPOSITORY=$1 --build-arg CLANG_VERSION=8 -t $1:clang-8 clang
-docker build --build-arg REPOSITORY=$1 --build-arg BASE=clang-8 -t $1:test-clang-8 test
+for version in 7 8; do
+    docker build --build-arg REPOSITORY=$1 --build-arg CLANG_VERSION=$version -t $1:clang-$version clang
+    docker build --build-arg REPOSITORY=$1 --build-arg BASE=clang-$version -t $1:test-clang-$version test
+done
 
 # CUDA
 docker build --build-arg REPOSITORY=$1 -t $1:cuda-10.1 cuda
