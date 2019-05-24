@@ -1,0 +1,15 @@
+ARG REPOSITORY
+FROM ${REPOSITORY}:base
+LABEL maintainer="Felix Thaler <thaler@cscs.ch>"
+
+ARG CLANG_VERSION=8
+ENV CLANG_VERSION ${CLANG_VERSION}
+
+RUN echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-${CLANG_VERSION} main" >> /etc/apt/sources.list && \
+    echo "deb-src http://apt.llvm.org/bionic/ llvm-toolchain-bionic-${CLANG_VERSION} main" >> /etc/apt/sources.list && \
+    wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
+    apt-get update && \
+    apt-get install -y clang-${CLANG_VERSION} && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV CXX=clang++-${CLANG_VERSION} CC=clang-${CLANG_VERSION}
