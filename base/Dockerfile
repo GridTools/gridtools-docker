@@ -17,7 +17,7 @@ RUN apt-get update -qq && \
     ln -s /usr/games/cowsay /usr/bin/cowsay && \
     rm -rf /var/lib/apt/lists/*
 
-ARG CMAKE_VERSION=3.14.4
+ARG CMAKE_VERSION=3.14.5
 RUN cd /tmp && \
     wget -q https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-Linux-x86_64.tar.gz && \
     tar xzf cmake-${CMAKE_VERSION}-Linux-x86_64.tar.gz && \
