@@ -12,7 +12,7 @@ for version in 7 8 9; do
 done
 
 # Clang
-for version in 7 8; do
+for version in 7 8 9; do
     docker build --build-arg REPOSITORY=$1 --build-arg CLANG_VERSION=$version -t $1:clang-$version clang
     docker build --build-arg REPOSITORY=$1 --build-arg BASE=clang-$version -t $1:test-clang-$version test
 done
