@@ -13,6 +13,7 @@ RUN apt-get update -qq && \
         tar \
         python3 \
         python3-nose \
+        python3-numpy \
         software-properties-common \
         cowsay && \
     ln -s /usr/games/cowsay /usr/bin/cowsay && \
