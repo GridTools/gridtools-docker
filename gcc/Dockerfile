@@ -13,4 +13,4 @@ RUN apt-get update -qq && \
         gfortran-${GCC_VERSION} && \
     rm -rf /var/lib/apt/lists/*
 
-ENV CXX=g++-${GCC_VERSION} CC=gcc-${GCC_VERSION}
+ENV CXX=g++-${GCC_VERSION} CC=gcc-${GCC_VERSION} FC=gfortran-${GCC_VERSION}
