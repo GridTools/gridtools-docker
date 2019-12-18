@@ -6,10 +6,11 @@ jobs:
   include:
   - stage: Build Docker Images
     script:
+    - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then export DOCKER_USERNAME=what; export DOCKER_REPOSITORY=ever; fi
     - bash build.sh "$DOCKER_USERNAME/$DOCKER_REPOSITORY"
-    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    - docker push "$DOCKER_USERNAME/$DOCKER_REPOSITORY"
-    - docker logout
+    - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin; fi
+    - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then docker push "$DOCKER_USERNAME/$DOCKER_REPOSITORY"; fi
+    - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then docker logout; fi
 env:
   global:
   - secure: U1xqLHYWoOesTe0IVa01+Jpv2t54UfA/0+/WGAuBj8GGij1FYGRWxFSMY6vTEReg6xRpo2S6V8UjDZ0w/znLmqzTwyrXKRTCe2GFqzmCQKGT2z49LtHQ9tBc7YU66fiiJllCXezFZzvqG4sOXGmTUjSsHRLxMovMuEwJ0AsWpgsExPJyteAG5FON8fJZdc/VTyShF3IrQnSt/CgK5cAbzlFzLq1ceR3+wdj+K1gSTz13iVqAZi6W64o4MgrBCRAzLpiAioIV/LZiEkDMxB63gMIsR7KVrIcocGKxWM0rF5NvbS9y0+PQbSsP3UIaEmeocrmZW4ogwrgbvnS8bKXrVb5gFjiSD6mT6O3hlUFdjCf0AIjrojFKpoEjDckMtPVIMFCriu2/lGC+OYTBaZv6El8PH5QQFnaEfzoaxRvepzHWVNhIePBfJsdJ+OoeSdWv9EHbGL9/+K4G7bV9PXI3OAJFjKy0SWHXl58pj31ygvgoX9QNxQLWFwV1tp5G0jf620nf41bKWxXGcKvUMNHHGlm6sVu2tXdQci4jHV6czJ/bxmP1eL2SminKZlQ+uKVZvg/xS3b3i9QSh0AiMVbAnOKxKZuf9au+pGDcv2I3bh3OdtKEtyjkmDuU2pvMhrksEl4cWWf7o43CMjbs8x5q4kB9/yuxubopRhl+7VhdOt4=
