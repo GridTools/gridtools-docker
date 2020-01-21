@@ -8,6 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -qq && \
     apt-get install -qq -y \
         build-essential \
+        ccache \
         wget \
         git \
         tar \
