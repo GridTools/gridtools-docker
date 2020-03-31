@@ -27,4 +27,6 @@ for clang_version in 9; do
     docker build --build-arg REPOSITORY=$1 --build-arg BASE=clang-$clang_version-cuda-10.1 -t $1:test-clang-$clang_version-cuda-10.1 test
 done
 
-version=9 docker build --build-arg REPOSITORY=$1 --build-arg GCC_VERSION=$version -t $1:gcc-$version gcc
+for version in 9; do
+    docker build --build-arg REPOSITORY=$1 --build-arg GCC_VERSION=$version -t $1:gcc-$version\-mpi gcc-mpi
+done
