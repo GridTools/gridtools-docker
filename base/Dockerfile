@@ -34,4 +34,8 @@ RUN cd /tmp && \
     cp -r boost_${BOOST_VERSION_UNERLINE}/boost /usr/local/include/ && \
     rm -rf *
 
+RUN  apt-get update -qq && \
+     apt-get install -qq -y mpich && \
+     rm -rf /var/lib/apt/lists/*
+
 CMD ["/bin/bash", "-l"]
