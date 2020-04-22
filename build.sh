@@ -26,3 +26,9 @@ for clang_version in 9 10; do
     docker build --build-arg REPOSITORY=$1 --build-arg CLANG_VERSION=$clang_version -t $1:clang-$clang_version-cuda-10.1 clang-cuda
     docker build --build-arg REPOSITORY=$1 --build-arg BASE=clang-$clang_version-cuda-10.1 -t $1:test-clang-$clang_version-cuda-10.1 test
 done
+
+# HIP
+for clang_version in 10; do
+    docker build --build-arg REPOSITORY=$1 --build-arg CLANG_VERSION=$clang_version -t $1:clang-$clang_version-hip clang-hip
+    docker build --build-arg REPOSITORY=$1 --build-arg BASE=clang-$clang_version-hip -t $1:test-clang-$clang_version-hip test
+done
