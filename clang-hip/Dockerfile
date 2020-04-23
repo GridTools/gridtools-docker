@@ -44,5 +44,5 @@ ENV PATH=/usr/lib/llvm-${CLANG_VERSION}/bin:${PATH} LD_LIBRARY_PATH=/usr/lib/llv
 ENV HIP_CLANG_PATH=/usr/lib/llvm-${CLANG_VERSION}/bin
 # Default set of GPU targets, otherwise hipcc just crashes when run without corresponding flags (and kills cmake config step)
 ENV HCC_AMDGPU_TARGET=gfx900,gfx906
-# Finally add all rocm binaries and libraries to paths
-ENV PATH=${PATH}:/opt/rocm/bin LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/opt/rocm/lib
+# Finally add all rocm binaries and libraries to paths and set CXX compiler
+ENV PATH=${PATH}:/opt/rocm/bin LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/opt/rocm/lib CXX=/opt/rocm/bin/hipcc
