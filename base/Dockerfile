@@ -38,4 +38,22 @@ RUN  apt-get update -qq && \
      apt-get install -qq -y mpich && \
      rm -rf /var/lib/apt/lists/*
 
+RUN git clone https://github.com/ecmwf/ecbuild
+
+RUN git clone https://github.com/ecmwf/eckit && \
+    cd eckit && \
+    git checkout master && \
+    mkdir -p build && cd build && \
+    /ecbuild/bin/ecbuild --build=RELEASE --prefix=/opt/eckit -- ../ && \
+    make install
+
+RUN git clone https://github.com/ecmwf/atlas && \
+    pwd && \
+    cd atlas && \
+    git checkout master && \
+    mkdir -p build && cd build && \
+    export ECKIT_PATH=/opt/eckit && \
+    /ecbuild/bin/ecbuild --build=RELEASE --prefix=/opt/atlas -- ../ && \
+    make install
+
 CMD ["/bin/bash", "-l"]
