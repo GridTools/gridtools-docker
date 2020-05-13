@@ -26,8 +26,8 @@ RUN git clone -b amd-stg-open https://github.com/RadeonOpenCompute/ROCm-Device-L
     make install && \
     cd ../.. && rm -rf ROCm-Device-Libs
 
-# Current HIP-Clang branch seems to be master-next, might change in the future!
-RUN git clone -b master-next https://github.com/ROCm-Developer-Tools/HIP.git && \
+# Use a frozen commit (from master-next branch) for now until there is a stable release
+RUN git clone -b ffcbd7e63395f8a4d3ccb7e4d5133f8d2dde793e https://github.com/ROCm-Developer-Tools/HIP.git && \
     cd HIP && \
     mkdir -p build && cd build && \
     cmake -DHIP_COMPILER=clang -DCMAKE_BUILD_TYPE=Release .. && \
