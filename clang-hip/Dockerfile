@@ -17,8 +17,8 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends rocm-dev && \
     rm -rf /var/lib/apt/lists/*
 
-# Note non-standard branch, might change in the future!
-RUN git clone -b amd-stg-open https://github.com/RadeonOpenCompute/ROCm-Device-Libs.git && \
+# Note we use a frozen commit until there is a stable release!
+RUN git clone -b 87f047619ce9ef1a7f8194ac4e86795e7a423cb7 https://github.com/RadeonOpenCompute/ROCm-Device-Libs.git && \
     cd ROCm-Device-Libs && \
     mkdir -p build && cd build && \
     cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_ASSERTIONS=1 .. && \
