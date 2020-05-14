@@ -17,18 +17,20 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends rocm-dev && \
     rm -rf /var/lib/apt/lists/*
 
-# Note non-standard branch, might change in the future!
-RUN git clone -b amd-stg-open https://github.com/RadeonOpenCompute/ROCm-Device-Libs.git && \
+# Note we use a frozen commit until there is a stable release!
+RUN git clone https://github.com/RadeonOpenCompute/ROCm-Device-Libs.git && \
     cd ROCm-Device-Libs && \
+    git checkout 87f047619ce9ef1a7f8194ac4e86795e7a423cb7 && \
     mkdir -p build && cd build && \
     cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_ASSERTIONS=1 .. && \
     make -j $(nproc) && \
     make install && \
     cd ../.. && rm -rf ROCm-Device-Libs
 
-# Current HIP-Clang branch seems to be master-next, might change in the future!
-RUN git clone -b master-next https://github.com/ROCm-Developer-Tools/HIP.git && \
+# Use a frozen commit (from master-next branch) for now until there is a stable release
+RUN git clone https://github.com/ROCm-Developer-Tools/HIP.git && \
     cd HIP && \
+    git checkout ffcbd7e63395f8a4d3ccb7e4d5133f8d2dde793e && \
     mkdir -p build && cd build && \
     cmake -DHIP_COMPILER=clang -DCMAKE_BUILD_TYPE=Release .. && \
     make -j $(nproc) && \
