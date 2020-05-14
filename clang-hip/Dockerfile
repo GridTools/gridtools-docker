@@ -18,7 +18,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Note we use a frozen commit until there is a stable release!
-RUN git clone -b 87f047619ce9ef1a7f8194ac4e86795e7a423cb7 https://github.com/RadeonOpenCompute/ROCm-Device-Libs.git && \
+RUN git clone https://github.com/RadeonOpenCompute/ROCm-Device-Libs.git && \
+    git checkout 87f047619ce9ef1a7f8194ac4e86795e7a423cb7 && \
     cd ROCm-Device-Libs && \
     mkdir -p build && cd build && \
     cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_ASSERTIONS=1 .. && \
@@ -27,7 +28,8 @@ RUN git clone -b 87f047619ce9ef1a7f8194ac4e86795e7a423cb7 https://github.com/Rad
     cd ../.. && rm -rf ROCm-Device-Libs
 
 # Use a frozen commit (from master-next branch) for now until there is a stable release
-RUN git clone -b ffcbd7e63395f8a4d3ccb7e4d5133f8d2dde793e https://github.com/ROCm-Developer-Tools/HIP.git && \
+RUN git clone https://github.com/ROCm-Developer-Tools/HIP.git && \
+    git checkout ffcbd7e63395f8a4d3ccb7e4d5133f8d2dde793e && \
     cd HIP && \
     mkdir -p build && cd build && \
     cmake -DHIP_COMPILER=clang -DCMAKE_BUILD_TYPE=Release .. && \
