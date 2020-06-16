@@ -56,4 +56,18 @@ RUN git clone https://github.com/ecmwf/atlas && \
     /ecbuild/bin/ecbuild --build=RELEASE --prefix=/opt/atlas -- ../ && \
     make install
 
+RUN apt-get update -qq && \
+    apt-get install -y libtool automake  autoconf && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN git clone https://github.com/openucx/ucx.git && \
+    cd ucx && \
+    git checkout v1.8.x && \
+    ./autogen.sh && \
+    ./configure --prefix=/usr/local --disable-numa --enable-mt && \
+    make && make install 
+
+ENV LD_LIBRARY_PATH /usr/local/lib:$LD_LIBRARY_PATH
+    
+
 CMD ["/bin/bash", "-l"]
