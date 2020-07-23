@@ -6,7 +6,7 @@ set -e
 docker build -t $1:base base
 
 # GCC
-for version in 7 8 9; do
+for version in 7 8 9 10; do
     docker build --build-arg REPOSITORY=$1 --build-arg GCC_VERSION=$version -t $1:gcc-$version gcc
     docker build --build-arg REPOSITORY=$1 --build-arg BASE=gcc-$version -t $1:test-gcc-$version test
 done
@@ -37,4 +37,11 @@ done
 for gcc_version in 9; do
     docker build --build-arg REPOSITORY=$1 --build-arg GCC_VERSION=$gcc_version --build-arg HPX_TAG=master -t $1:gcc-$version-hpx gcc-hpx
     docker build --build-arg REPOSITORY=$1 --build-arg BASE=gcc-$version-hpx -t $1:test-gcc-$version-hpx test
+done
+
+# with atlas
+for compiler in "gcc" "clang"; do
+    for version in 10; do
+        docker build --build-arg REPOSITORY=$1 --build-arg COMPILER=$compiler --build-arg VERSION=$version -t $1:$compiler-$version-atlas $compiler-atlas
+    done
 done

@@ -2,7 +2,7 @@ ARG REPOSITORY
 FROM ${REPOSITORY}:base
 LABEL maintainer="Felix Thaler <thaler@cscs.ch>"
 
-ARG GCC_VERSION=9
+ARG GCC_VERSION=10
 ENV GCC_VERSION ${GCC_VERSION}
 
 RUN apt-get update -qq && \
