@@ -6,7 +6,7 @@ set -e
 docker build -t $1:base base
 
 # GCC
-for version in 7 8 9 10; do
+for version in 7 8 9; do
     docker build --build-arg REPOSITORY=$1 --build-arg GCC_VERSION=$version -t $1:gcc-$version gcc
     docker build --build-arg REPOSITORY=$1 --build-arg BASE=gcc-$version -t $1:test-gcc-$version test
 done
