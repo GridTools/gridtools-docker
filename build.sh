@@ -41,7 +41,7 @@ for gcc_version in 10; do
 done
 
 # with atlas
-for compiler in "gcc" "clang"; do
+for compiler in "gcc"; do
     for version in 9; do
         docker build --build-arg REPOSITORY=$1 --build-arg COMPILER=$compiler --build-arg VERSION=$version -t $1:$compiler-$version-atlas atlas
     done
