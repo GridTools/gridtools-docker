@@ -35,10 +35,10 @@ done
 #done
 
 # GCC with HPX (not by default as it will increase docker build time significantly)
-for gcc_version in 10; do
-    docker build --build-arg REPOSITORY=$1 --build-arg GCC_VERSION=$gcc_version --build-arg HPX_TAG=master -t $1:gcc-$version-hpx gcc-hpx
-    docker build --build-arg REPOSITORY=$1 --build-arg BASE=gcc-$version-hpx -t $1:test-gcc-$version-hpx test
-done
+#for gcc_version in 10; do
+#    docker build --build-arg REPOSITORY=$1 --build-arg GCC_VERSION=$gcc_version --build-arg HPX_TAG=master -t $1:gcc-$version-hpx gcc-hpx
+#    docker build --build-arg REPOSITORY=$1 --build-arg BASE=gcc-$version-hpx -t $1:test-gcc-$version-hpx test
+#done
 
 # with atlas
 for compiler in "gcc"; do
