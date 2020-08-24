@@ -5,8 +5,8 @@ LABEL maintainer="Felix Thaler <thaler@cscs.ch>"
 ARG CLANG_VERSION=8
 ENV CLANG_VERSION ${CLANG_VERSION}
 
-RUN echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-${CLANG_VERSION} main" >> /etc/apt/sources.list && \
-    echo "deb-src http://apt.llvm.org/bionic/ llvm-toolchain-bionic-${CLANG_VERSION} main" >> /etc/apt/sources.list && \
+RUN echo "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-${CLANG_VERSION} main" >> /etc/apt/sources.list && \
+    echo "deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal-${CLANG_VERSION} main" >> /etc/apt/sources.list && \
     wget -q -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
     apt-get update -qq && \
     apt-get install -qq -y clang-${CLANG_VERSION} && \
