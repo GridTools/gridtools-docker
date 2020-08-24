@@ -15,4 +15,4 @@ RUN cd /tmp && \
     dpkg -r $(dpkg-query -f '${Package}' -W 'cuda-repo-*') && \
     rm -rf /var/lib/apt/lists/*
 
-ENV CUDACXX=/usr/local/cuda-10.1/bin/nvcc
+ENV CUDACXX=/usr/local/cuda-11.0/bin/nvcc
