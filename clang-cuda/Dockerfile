@@ -13,6 +13,7 @@ RUN cd /tmp && \
     apt-get install -qq -y cuda-compiler-10-1 cuda-libraries-dev-10-1 && \
     rm -rf * && \
     dpkg -r $(dpkg-query -f '${Package}' -W 'cuda-repo-*') && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    ln -s /usr/local/cuda-10.1 /usr/local/cuda
 
 ENV CUDACXX=/usr/local/cuda-10.1/bin/nvcc
