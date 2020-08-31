@@ -12,4 +12,4 @@ RUN echo "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-${CLANG_VERSION} m
     apt-get install -qq -y clang-${CLANG_VERSION} && \
     rm -rf /var/lib/apt/lists/*
 
-ENV CXX=clang++-${CLANG_VERSION} CC=clang-${CLANG_VERSION}
+ENV CXX=clang++-${CLANG_VERSION} CC=clang-${CLANG_VERSION} CUDAHOSTCXX=clang++-${CLANG_VERSION}
