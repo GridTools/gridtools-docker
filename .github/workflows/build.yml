@@ -8,8 +8,7 @@ on:
 
 env:
   DOCKER_BUILDKIT: 1
-  DOCKERHUB_USER: fthaler
-  DOCKERHUB_REPOSITORY: fthaler/gridtools-base
+  CR_REPOSITORY: ghcr.io/gridtools/gridtools-base
 
 
 jobs:
@@ -21,15 +20,15 @@ jobs:
       run: >
         docker build
         --progress=plain
-        --cache-from $DOCKERHUB_REPOSITORY:base
-        --tag $DOCKERHUB_REPOSITORY:base
-        --build-arg REPOSITORY=$DOCKERHUB_REPOSITORY
+        --cache-from $CR_REPOSITORY:base
+        --tag $CR_REPOSITORY:base
+        --build-arg REPOSITORY=$CR_REPOSITORY
         base
     - name: Push
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
-        echo ${{ secrets.DOCKER_TOKEN }} | docker login -u $DOCKERHUB_USER --password-stdin &&
-        docker push $DOCKERHUB_REPOSITORY &&
+        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
+        docker push $CR_REPOSITORY &&
         docker logout
 
   gcc:
@@ -44,17 +43,17 @@ jobs:
       run: >
         docker build
         --progress=plain
-        --cache-from $DOCKERHUB_REPOSITORY:base
-        --cache-from $DOCKERHUB_REPOSITORY:gcc-${{ matrix.version }}
-        --tag $DOCKERHUB_REPOSITORY:gcc-${{ matrix.version }}
-        --build-arg REPOSITORY=$DOCKERHUB_REPOSITORY
+        --cache-from $CR_REPOSITORY:base
+        --cache-from $CR_REPOSITORY:gcc-${{ matrix.version }}
+        --tag $CR_REPOSITORY:gcc-${{ matrix.version }}
+        --build-arg REPOSITORY=$CR_REPOSITORY
         --build-arg GCC_VERSION=${{ matrix.version }}
         gcc
     - name: Push
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
-        echo ${{ secrets.DOCKER_TOKEN }} | docker login -u $DOCKERHUB_USER --password-stdin &&
-        docker push $DOCKERHUB_REPOSITORY &&
+        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
+        docker push $CR_REPOSITORY &&
         docker logout
 
   clang:
@@ -69,17 +68,17 @@ jobs:
       run: >
         docker build
         --progress=plain
-        --cache-from $DOCKERHUB_REPOSITORY:base
-        --cache-from $DOCKERHUB_REPOSITORY:clang-${{ matrix.version }}
-        --tag $DOCKERHUB_REPOSITORY:clang-${{ matrix.version }}
-        --build-arg REPOSITORY=$DOCKERHUB_REPOSITORY
+        --cache-from $CR_REPOSITORY:base
+        --cache-from $CR_REPOSITORY:clang-${{ matrix.version }}
+        --tag $CR_REPOSITORY:clang-${{ matrix.version }}
+        --build-arg REPOSITORY=$CR_REPOSITORY
         --build-arg CLANG_VERSION=${{ matrix.version }}
         clang
     - name: Push
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
-        echo ${{ secrets.DOCKER_TOKEN }} | docker login -u $DOCKERHUB_USER --password-stdin &&
-        docker push $DOCKERHUB_REPOSITORY &&
+        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
+        docker push $CR_REPOSITORY &&
         docker logout
 
   clang-cuda:
@@ -94,18 +93,18 @@ jobs:
       run: >
         docker build
         --progress=plain
-        --cache-from $DOCKERHUB_REPOSITORY:base
-        --cache-from $DOCKERHUB_REPOSITORY:clang-${{ matrix.version }}
-        --cache-from $DOCKERHUB_REPOSITORY:clang-${{ matrix.version }}-cuda-11
-        --tag $DOCKERHUB_REPOSITORY:clang-${{ matrix.version }}-cuda-11
-        --build-arg REPOSITORY=$DOCKERHUB_REPOSITORY
+        --cache-from $CR_REPOSITORY:base
+        --cache-from $CR_REPOSITORY:clang-${{ matrix.version }}
+        --cache-from $CR_REPOSITORY:clang-${{ matrix.version }}-cuda-11
+        --tag $CR_REPOSITORY:clang-${{ matrix.version }}-cuda-11
+        --build-arg REPOSITORY=$CR_REPOSITORY
         --build-arg CLANG_VERSION=${{ matrix.version }}
         clang-cuda
     - name: Push
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
-        echo ${{ secrets.DOCKER_TOKEN }} | docker login -u $DOCKERHUB_USER --password-stdin &&
-        docker push $DOCKERHUB_REPOSITORY &&
+        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
+        docker push $CR_REPOSITORY &&
         docker logout
 
   hip:
@@ -117,16 +116,16 @@ jobs:
       run: >
         docker build
         --progress=plain
-        --cache-from $DOCKERHUB_REPOSITORY:base
-        --cache-from $DOCKERHUB_REPOSITORY:hip
-        --tag $DOCKERHUB_REPOSITORY:hip
-        --build-arg REPOSITORY=$DOCKERHUB_REPOSITORY
+        --cache-from $CR_REPOSITORY:base
+        --cache-from $CR_REPOSITORY:hip
+        --tag $CR_REPOSITORY:hip
+        --build-arg REPOSITORY=$CR_REPOSITORY
         hip
     - name: Push
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
-        echo ${{ secrets.DOCKER_TOKEN }} | docker login -u $DOCKERHUB_USER --password-stdin &&
-        docker push $DOCKERHUB_REPOSITORY &&
+        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
+        docker push $CR_REPOSITORY &&
         docker logout
 
   hpx:
@@ -141,18 +140,18 @@ jobs:
       run: >
         docker build
         --progress=plain
-        --cache-from $DOCKERHUB_REPOSITORY:base
-        --cache-from $DOCKERHUB_REPOSITORY:${{ matrix.base }}
-        --cache-from $DOCKERHUB_REPOSITORY:${{ matrix.base }}-hpx
-        --tag $DOCKERHUB_REPOSITORY:${{ matrix.base }}-hpx
-        --build-arg REPOSITORY=$DOCKERHUB_REPOSITORY
+        --cache-from $CR_REPOSITORY:base
+        --cache-from $CR_REPOSITORY:${{ matrix.base }}
+        --cache-from $CR_REPOSITORY:${{ matrix.base }}-hpx
+        --tag $CR_REPOSITORY:${{ matrix.base }}-hpx
+        --build-arg REPOSITORY=$CR_REPOSITORY
         --build-arg BASE=${{ matrix.base }}
         hpx
     - name: Push
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
-        echo ${{ secrets.DOCKER_TOKEN }} | docker login -u $DOCKERHUB_USER --password-stdin &&
-        docker push $DOCKERHUB_REPOSITORY &&
+        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
+        docker push $CR_REPOSITORY &&
         docker logout
 
   atlas:
@@ -167,16 +166,16 @@ jobs:
       run: >
         docker build
         --progress=plain
-        --cache-from $DOCKERHUB_REPOSITORY:base
-        --cache-from $DOCKERHUB_REPOSITORY:${{ matrix.base }}
-        --cache-from $DOCKERHUB_REPOSITORY:${{ matrix.base }}-atlas
-        --tag $DOCKERHUB_REPOSITORY:${{ matrix.base }}-atlas
-        --build-arg REPOSITORY=$DOCKERHUB_REPOSITORY
+        --cache-from $CR_REPOSITORY:base
+        --cache-from $CR_REPOSITORY:${{ matrix.base }}
+        --cache-from $CR_REPOSITORY:${{ matrix.base }}-atlas
+        --tag $CR_REPOSITORY:${{ matrix.base }}-atlas
+        --build-arg REPOSITORY=$CR_REPOSITORY
         --build-arg BASE=${{ matrix.base }}
         atlas
     - name: Push
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
-        echo ${{ secrets.DOCKER_TOKEN }} | docker login -u $DOCKERHUB_USER --password-stdin &&
-        docker push $DOCKERHUB_REPOSITORY &&
+        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
+        docker push $CR_REPOSITORY &&
         docker logout
