@@ -1,6 +1,6 @@
 ARG REPOSITORY
-ARG GCC_VERSION=9
-FROM ${REPOSITORY}:gcc-${GCC_VERSION}
+ARG BASE
+FROM ${REPOSITORY}:${BASE}
 LABEL maintainer="Felix Thaler <thaler@cscs.ch>"
 
 ARG HPX_TAG=master
