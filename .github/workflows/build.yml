@@ -29,7 +29,7 @@ jobs:
       run: >
         echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
         docker push $CR_REPOSITORY &&
-        docker logout
+        docker logout ghcr.io
 
   gcc:
     runs-on: ubuntu-latest
@@ -54,7 +54,7 @@ jobs:
       run: >
         echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
         docker push $CR_REPOSITORY &&
-        docker logout
+        docker logout ghcr.io
 
   clang:
     runs-on: ubuntu-latest
@@ -79,11 +79,32 @@ jobs:
       run: >
         echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
         docker push $CR_REPOSITORY &&
-        docker logout
+        docker logout ghcr.io
+
+  cuda:
+    runs-on: ubuntu-latest
+    needs: base
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: >
+        docker build
+        --progress=plain
+        --cache-from $CR_REPOSITORY:base
+        --cache-from $CR_REPOSITORY:cuda-11
+        --tag $CR_REPOSITORY:cuda-11
+        --build-arg REPOSITORY=$CR_REPOSITORY
+        cuda
+    - name: Push
+      if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
+      run: >
+        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
+        docker push $CR_REPOSITORY &&
+        docker logout ghcr.io
 
   clang-cuda:
     runs-on: ubuntu-latest
-    needs: base
+    needs: clang
     strategy:
       matrix:
         version: [11]
@@ -105,7 +126,7 @@ jobs:
       run: >
         echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
         docker push $CR_REPOSITORY &&
-        docker logout
+        docker logout ghcr.io
 
   hip:
     runs-on: ubuntu-latest
@@ -126,7 +147,7 @@ jobs:
       run: >
         echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
         docker push $CR_REPOSITORY &&
-        docker logout
+        docker logout ghcr.io
 
   hpx:
     runs-on: ubuntu-latest
@@ -152,7 +173,7 @@ jobs:
       run: >
         echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
         docker push $CR_REPOSITORY &&
-        docker logout
+        docker logout ghcr.io
 
   atlas:
     runs-on: ubuntu-latest
@@ -178,4 +199,4 @@ jobs:
       run: >
         echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
         docker push $CR_REPOSITORY &&
-        docker logout
+        docker logout ghcr.io
