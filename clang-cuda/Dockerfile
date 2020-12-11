@@ -5,14 +5,15 @@ LABEL maintainer="Felix Thaler <thaler@cscs.ch>"
 
 ENV CLANG_VERSION ${CLANG_VERSION}
 
-RUN cd /tmp && \
-    wget -q https://developer.download.nvidia.com/compute/cuda/11.0.3/local_installers/cuda-repo-ubuntu2004-11-0-local_11.0.3-450.51.06-1_amd64.deb && \
-    dpkg -i cuda-repo-ubuntu2004-11-0-local_11.0.3-450.51.06-1_amd64.deb && \
-    apt-key add /var/cuda-repo-ubuntu2004-11-0-local/7fa2af80.pub && \
-    apt-get update -qq && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -qq -y cuda-minimal-build-11-0 && \
-    rm -rf * && \
-    dpkg -r $(dpkg-query -f '${Package}' -W 'cuda-repo-*') && \
+# from https://gitlab.com/nvidia/container-images/cuda/-/tree/master/dist/11.1/ubuntu20.04-x86_64/base
+RUN apt-get update -qq && \
+    wget -q -O- https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub | apt-key add - && \
+    echo "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64 /" > /etc/apt/sources.list.d/cuda.list && \
+    echo "deb https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu2004/x86_64 /" > /etc/apt/sources.list.d/nvidia-ml.list && \
     rm -rf /var/lib/apt/lists/*
 
-ENV CUDACXX=/usr/local/cuda-11.0/bin/nvcc
+RUN apt-get update -qq && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -qq -y cuda-minimal-build-11-1 && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV CUDACXX=/usr/local/cuda-11.1/bin/nvcc
