@@ -12,3 +12,5 @@ RUN cd /tmp && \
     cmake .. -DHPX_WITH_MALLOC=system -DBUILD_TESTING=OFF -DCMAKE_BUILD_TYPE=Release -DHPX_WITH_EXAMPLES=OFF -DHPX_WITH_TESTS=OFF -DHPX_WITH_COMPILE_ONLY_TESTS=OFF -DHPX_WITH_FAIL_COMPILE_TESTS=OFF && \
     make -j$(nproc) install && \
     cd ../.. && rm -rf hpx
+
+RUN echo "Hello World!"
