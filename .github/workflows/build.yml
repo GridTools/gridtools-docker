@@ -86,32 +86,10 @@ jobs:
 
   cuda:
     runs-on: ubuntu-latest
-    needs: base
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: >
-        docker build
-        --progress=plain
-        --cache-from $CR_REPOSITORY:base
-        --cache-from $CR_REPOSITORY:cuda-11
-        --build-arg BUILDKIT_INLINE_CACHE=1
-        --tag $CR_REPOSITORY:cuda-11
-        --build-arg REPOSITORY=$CR_REPOSITORY
-        cuda
-    - name: Push
-      if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
-      run: >
-        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
-        docker push $CR_REPOSITORY &&
-        docker logout ghcr.io
-
-  clang-cuda:
-    runs-on: ubuntu-latest
-    needs: clang
+    needs: [gcc, clang]
     strategy:
       matrix:
-        version: [11]
+        base: [gcc-9, clang-9]
     steps:
     - uses: actions/checkout@v2
     - name: Build
@@ -119,13 +97,13 @@ jobs:
         docker build
         --progress=plain
         --cache-from $CR_REPOSITORY:base
-        --cache-from $CR_REPOSITORY:clang-${{ matrix.version }}
-        --cache-from $CR_REPOSITORY:clang-${{ matrix.version }}-cuda-11
+        --cache-from $CR_REPOSITORY:${{ matrix.base }}
+        --cache-from $CR_REPOSITORY:${{ matrix.base }}-cuda-11
         --build-arg BUILDKIT_INLINE_CACHE=1
-        --tag $CR_REPOSITORY:clang-${{ matrix.version }}-cuda-11
+        --tag $CR_REPOSITORY:${{ matrix.base }}-cuda-11
         --build-arg REPOSITORY=$CR_REPOSITORY
-        --build-arg CLANG_VERSION=${{ matrix.version }}
-        clang-cuda
+        --build-arg BASE=${{ matrix.base }}
+        cuda
     - name: Push
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >

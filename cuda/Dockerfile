@@ -1,5 +1,6 @@
 ARG REPOSITORY
-FROM ${REPOSITORY}:base
+ARG BASE
+FROM ${REPOSITORY}:${BASE}
 LABEL maintainer="Felix Thaler <thaler@cscs.ch>"
 
 # from https://gitlab.com/nvidia/container-images/cuda/-/tree/master/dist/11.1/ubuntu20.04-x86_64/base
@@ -13,4 +14,4 @@ RUN apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive apt-get install -qq -y cuda-minimal-build-11-1 && \
     rm -rf /var/lib/apt/lists/*
 
-ENV CUDACXX=/usr/local/cuda-11.1/bin/nvcc
+ENV CUDACXX=/usr/local/cuda-11.1/bin/nvcc CUDAHOSTCXX=${CXX}
