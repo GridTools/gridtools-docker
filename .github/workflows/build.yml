@@ -16,6 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Login
+      run: >
+        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
     - name: Build
       run: >
         docker build
@@ -27,8 +30,9 @@ jobs:
     - name: Push
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
-        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
-        docker push $CR_REPOSITORY &&
+        docker push $CR_REPOSITORY
+    - name: Logout
+      run: >
         docker logout ghcr.io
 
   gcc:
@@ -39,6 +43,9 @@ jobs:
         version: [8, 9, 10]
     steps:
     - uses: actions/checkout@v2
+    - name: Login
+      run: >
+        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
     - name: Build
       run: >
         docker build
@@ -52,8 +59,9 @@ jobs:
     - name: Push
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
-        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
-        docker push $CR_REPOSITORY &&
+        docker push $CR_REPOSITORY
+    - name: Logout
+      run: >
         docker logout ghcr.io
 
   clang:
@@ -64,6 +72,9 @@ jobs:
         version: [9, 10, 11]
     steps:
     - uses: actions/checkout@v2
+    - name: Login
+      run: >
+        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
     - name: Build
       run: >
         docker build
@@ -77,8 +88,9 @@ jobs:
     - name: Push
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
-        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
-        docker push $CR_REPOSITORY &&
+        docker push $CR_REPOSITORY
+    - name: Logout
+      run: >
         docker logout ghcr.io
 
   cuda:
@@ -86,6 +98,9 @@ jobs:
     needs: base
     steps:
     - uses: actions/checkout@v2
+    - name: Login
+      run: >
+        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
     - name: Build
       run: >
         docker build
@@ -98,8 +113,9 @@ jobs:
     - name: Push
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
-        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
-        docker push $CR_REPOSITORY &&
+        docker push $CR_REPOSITORY
+    - name: Logout
+      run: >
         docker logout ghcr.io
 
   clang-cuda:
@@ -110,6 +126,9 @@ jobs:
         version: [11]
     steps:
     - uses: actions/checkout@v2
+    - name: Login
+      run: >
+        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
     - name: Build
       run: >
         docker build
@@ -124,8 +143,9 @@ jobs:
     - name: Push
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
-        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
-        docker push $CR_REPOSITORY &&
+        docker push $CR_REPOSITORY
+    - name: Logout
+      run: >
         docker logout ghcr.io
 
   hip:
@@ -133,6 +153,9 @@ jobs:
     needs: base
     steps:
     - uses: actions/checkout@v2
+    - name: Login
+      run: >
+        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
     - name: Build
       run: >
         docker build
@@ -145,8 +168,9 @@ jobs:
     - name: Push
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
-        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
-        docker push $CR_REPOSITORY &&
+        docker push $CR_REPOSITORY
+    - name: Logout
+      run: >
         docker logout ghcr.io
 
   hpx:
@@ -157,6 +181,9 @@ jobs:
         base: [gcc-10]
     steps:
     - uses: actions/checkout@v2
+    - name: Login
+      run: >
+        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
     - name: Build
       run: >
         docker build
@@ -171,8 +198,9 @@ jobs:
     - name: Push
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
-        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
-        docker push $CR_REPOSITORY &&
+        docker push $CR_REPOSITORY
+    - name: Logout
+      run: >
         docker logout ghcr.io
 
   atlas:
@@ -183,6 +211,9 @@ jobs:
         base: [gcc-9]
     steps:
     - uses: actions/checkout@v2
+    - name: Login
+      run: >
+        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
     - name: Build
       run: >
         docker build
@@ -197,6 +228,7 @@ jobs:
     - name: Push
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
-        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
-        docker push $CR_REPOSITORY &&
+        docker push $CR_REPOSITORY
+    - name: Logout
+      run: >
         docker logout ghcr.io
