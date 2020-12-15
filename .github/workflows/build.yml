@@ -152,6 +152,7 @@ jobs:
         --tag $CR_REPOSITORY:${{ matrix.base }}-hpx
         --build-arg REPOSITORY=$CR_REPOSITORY
         --build-arg BASE=${{ matrix.base }}
+        --build-arg HPX_TAG=1.5.1
         hpx
     - name: Push
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
