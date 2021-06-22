@@ -11,7 +11,7 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update -qq && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -qq -y cuda-minimal-build-11-1 && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -qq -y cuda-minimal-build-11-3 && \
     rm -rf /var/lib/apt/lists/*
 
-ENV CUDACXX=/usr/local/cuda-11.1/bin/nvcc CUDAHOSTCXX=${CXX}
+ENV CUDACXX=/usr/local/cuda-11.3/bin/nvcc CUDAHOSTCXX=${CXX}
