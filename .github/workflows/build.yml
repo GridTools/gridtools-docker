@@ -29,7 +29,7 @@ jobs:
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
         echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
-        docker push $CR_REPOSITORY &&
+        docker push $CR_REPOSITORY:base &&
         docker logout ghcr.io
 
   gcc:
@@ -55,7 +55,7 @@ jobs:
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
         echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
-        docker push $CR_REPOSITORY &&
+        docker push $CR_REPOSITORY:gcc-${{ matrix.version }} &&
         docker logout ghcr.io
 
   clang:
@@ -81,7 +81,7 @@ jobs:
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
         echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
-        docker push $CR_REPOSITORY &&
+        docker push $CR_REPOSITORY:clang-${{ matrix.version }} &&
         docker logout ghcr.io
 
   cuda:
@@ -108,7 +108,7 @@ jobs:
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
         echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
-        docker push $CR_REPOSITORY &&
+        docker push $CR_REPOSITORY:${{ matrix.base }}-cuda-11 &&
         docker logout ghcr.io
 
   hip:
@@ -130,7 +130,7 @@ jobs:
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
         echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
-        docker push $CR_REPOSITORY &&
+        docker push $CR_REPOSITORY:hip &&
         docker logout ghcr.io
 
   hpx:
@@ -158,7 +158,7 @@ jobs:
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
         echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
-        docker push $CR_REPOSITORY &&
+        docker push $CR_REPOSITORY:${{ matrix.base }}-hpx &&
         docker logout ghcr.io
 
   atlas:
@@ -185,5 +185,5 @@ jobs:
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
       run: >
         echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
-        docker push $CR_REPOSITORY &&
+        docker push $CR_REPOSITORY:${{ matrix.base }}-atlas &&
         docker logout ghcr.io
