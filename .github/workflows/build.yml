@@ -166,7 +166,7 @@ jobs:
     needs: gcc
     strategy:
       matrix:
-        base: [gcc-10]
+        base: [gcc-9]
     steps:
     - uses: actions/checkout@v2
     - name: Build
