@@ -3,7 +3,7 @@ ARG BASE
 FROM ${REPOSITORY}:${BASE}
 LABEL maintainer="Felix Thaler <thaler@cscs.ch>"
 
-# from https://gitlab.com/nvidia/container-images/cuda/-/tree/master/dist/11.1/ubuntu20.04-x86_64/base
+# from https://gitlab.com/nvidia/container-images/cuda/-/blob/master/dist/11.3.0/ubuntu20.04-x86_64/base
 RUN apt-get update -qq && \
     wget -q -O- https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub | apt-key add - && \
     echo "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64 /" > /etc/apt/sources.list.d/cuda.list && \
