@@ -37,7 +37,7 @@ jobs:
     needs: base
     strategy:
       matrix:
-        version: [8, 9, 10]
+        version: [8, 9, 10, 11]
     steps:
     - uses: actions/checkout@v2
     - name: Build
@@ -63,7 +63,7 @@ jobs:
     needs: base
     strategy:
       matrix:
-        version: [9, 10, 11]
+        version: [9, 10, 11, 12]
     steps:
     - uses: actions/checkout@v2
     - name: Build
@@ -89,7 +89,7 @@ jobs:
     needs: [gcc, clang]
     strategy:
       matrix:
-        base: [gcc-9, clang-9]
+        base: [gcc-10, clang-10]
     steps:
     - uses: actions/checkout@v2
     - name: Build
