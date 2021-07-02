@@ -224,7 +224,7 @@ jobs:
     needs: gcc
     strategy:
       matrix:
-        base: [gcc-9]
+        base: [gcc-9, gcc-9-ucx-mpi]
     steps:
     - uses: actions/checkout@v2
     - name: Build
