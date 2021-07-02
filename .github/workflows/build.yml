@@ -189,6 +189,36 @@ jobs:
         docker push $CR_REPOSITORY:${{ matrix.base }}-ucx &&
         docker logout ghcr.io
 
+  mpi:
+    runs-on: ubuntu-latest
+    needs: [gcc, ucx]
+    strategy:
+      matrix:
+        base: [gcc-9-ucx]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: >
+        docker build
+        --progress=plain
+        --cache-from $CR_REPOSITORY:base
+        --cache-from $CR_REPOSITORY:gcc-9
+        --cache-from $CR_REPOSITORY:${{ matrix.base }}
+        --cache-from $CR_REPOSITORY:${{ matrix.base }}-mpi
+        --build-arg BUILDKIT_INLINE_CACHE=1
+        --tag $CR_REPOSITORY:${{ matrix.base }}-mpi
+        --build-arg REPOSITORY=$CR_REPOSITORY
+        --build-arg BASE=${{ matrix.base }}
+        --build-arg MPI_VERSION=4.1
+        --build-arg MPI_VERSION_FULL=4.1.1
+        mpi
+    - name: Push
+      if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
+      run: >
+        echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
+        docker push $CR_REPOSITORY:${{ matrix.base }}-mpi &&
+        docker logout ghcr.io
+
   atlas:
     runs-on: ubuntu-latest
     needs: gcc
