@@ -248,12 +248,10 @@ jobs:
 
   parmetis:
     runs-on: ubuntu-latest
-    # needs: atlas TO DO: restore this dependency whenever possible. The one below is just for testing.
-    needs: gcc
+    needs: atlas
     strategy:
       matrix:
-        # base: [gcc-9-ucx-mpi-atlas] TO DO: restore this dependency whenever possible. The one below is just for testing.
-        base: [gcc-9]
+        base: [gcc-9-ucx-mpi-atlas]
     steps:
     - uses: actions/checkout@v2
     - name: Build
