@@ -1,5 +1,6 @@
 ARG REPOSITORY
-FROM ${REPOSITORY}:base
+ARG BASE
+FROM ${REPOSITORY}:${BASE}
 LABEL maintainer="Felix Thaler <thaler@cscs.ch>"
 
 RUN wget -q -O - https://repo.radeon.com/rocm/rocm.gpg.key | apt-key add - && \
