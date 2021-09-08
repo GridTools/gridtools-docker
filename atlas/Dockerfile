@@ -23,11 +23,14 @@ RUN cd /tmp && \
     rm -rf /tmp/*
 
 
+# patch atlas
 ARG ATLAS_VERSION=0.20.1
 RUN cd /tmp && \
     wget -q https://github.com/ecmwf/atlas/archive/${ATLAS_VERSION}.tar.gz && \
     tar xzf ${ATLAS_VERSION}.tar.gz && \
     cd atlas-${ATLAS_VERSION} && \
+    sed -i '13 i #include <string>' ./src/atlas/grid/Spacing.h && \
+    head -n 100 ./src/atlas/grid/Spacing.h && \
     mkdir build && cd build && \
     ecbuild .. && \
     make -j$(nproc) install && \
