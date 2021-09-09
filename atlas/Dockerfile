@@ -23,7 +23,6 @@ RUN cd /tmp && \
     rm -rf /tmp/*
 
 
-# patch atlas: add missing include <string>
 ARG ATLAS_VERSION=0.26.0
 RUN cd /tmp && \
     wget -q https://github.com/ecmwf/atlas/archive/${ATLAS_VERSION}.tar.gz && \
