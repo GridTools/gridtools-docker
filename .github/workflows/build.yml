@@ -24,6 +24,7 @@ jobs:
         --build-arg BUILDKIT_INLINE_CACHE=1
         --tag $CR_REPOSITORY:base
         --build-arg REPOSITORY=$CR_REPOSITORY
+        --build-arg CMAKE_VERSION=3.21.2
         base
     - name: Push
       if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
