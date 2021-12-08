@@ -5,6 +5,7 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
+  workflow_dispatch:
 
 env:
   DOCKER_BUILDKIT: 1
@@ -27,7 +28,7 @@ jobs:
         --build-arg CMAKE_VERSION=3.21.2
         base
     - name: Push
-      if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
+      if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.repository == 'GridTools/gridtools-docker' }}
       run: >
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
         docker push $CR_REPOSITORY:base &&
@@ -53,7 +54,7 @@ jobs:
         --build-arg GCC_VERSION=${{ matrix.version }}
         gcc
     - name: Push
-      if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
+      if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.repository == 'GridTools/gridtools-docker' }}
       run: >
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
         docker push $CR_REPOSITORY:gcc-${{ matrix.version }} &&
@@ -79,7 +80,7 @@ jobs:
         --build-arg CLANG_VERSION=${{ matrix.version }}
         clang
     - name: Push
-      if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
+      if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.repository == 'GridTools/gridtools-docker' }}
       run: >
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
         docker push $CR_REPOSITORY:clang-${{ matrix.version }} &&
@@ -106,7 +107,7 @@ jobs:
         --build-arg BASE=${{ matrix.base }}
         cuda
     - name: Push
-      if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
+      if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.repository == 'GridTools/gridtools-docker' }}
       run: >
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
         docker push $CR_REPOSITORY:${{ matrix.base }}-cuda-11 &&
@@ -132,7 +133,7 @@ jobs:
         --build-arg BASE=${{ matrix.base }}
         hip
     - name: Push
-      if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
+      if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.repository == 'GridTools/gridtools-docker' }}
       run: >
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
         docker push $CR_REPOSITORY:${{ matrix.base }}-hip &&
@@ -160,7 +161,7 @@ jobs:
         --build-arg HPX_TAG=1.5.1
         hpx
     - name: Push
-      if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
+      if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.repository == 'GridTools/gridtools-docker' }}
       run: >
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
         docker push $CR_REPOSITORY:${{ matrix.base }}-hpx &&
@@ -188,7 +189,7 @@ jobs:
         --build-arg UCX_VERSION=1.10.1
         ucx
     - name: Push
-      if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
+      if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.repository == 'GridTools/gridtools-docker' }}
       run: >
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
         docker push $CR_REPOSITORY:${{ matrix.base }}-ucx &&
@@ -218,7 +219,7 @@ jobs:
         --build-arg MPI_VERSION_FULL=4.1.1
         mpi
     - name: Push
-      if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
+      if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.repository == 'GridTools/gridtools-docker' }}
       run: >
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
         docker push $CR_REPOSITORY:${{ matrix.base }}-mpi &&
@@ -245,7 +246,7 @@ jobs:
         --build-arg BASE=${{ matrix.base }}
         atlas
     - name: Push
-      if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
+      if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.repository == 'GridTools/gridtools-docker' }}
       run: >
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
         docker push $CR_REPOSITORY:${{ matrix.base }}-atlas &&
@@ -276,7 +277,7 @@ jobs:
         --build-arg PARMETIS_VERSION=4.0.3
         parmetis
     - name: Push
-      if: ${{ github.event_name == 'push' && github.repository == 'GridTools/gridtools-docker' }}
+      if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.repository == 'GridTools/gridtools-docker' }}
       run: >
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
         docker push $CR_REPOSITORY:${{ matrix.base }}-parmetis &&
