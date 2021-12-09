@@ -7,7 +7,7 @@ RUN wget https://repo.radeon.com/amdgpu-install/21.40/ubuntu/focal/amdgpu-instal
     apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive apt-get install -qq -y ./amdgpu-install-21.40.40500-1_all.deb && \
     apt-get update -qq && \
-    amdgpu-install -y --usecase=hip --no-dkms && \
+    amdgpu-install -y --usecase=rocm,hip --no-dkms && \
     rm -rf /var/lib/apt/lists/*
 
 ENV ROCM_PATH=/opt/rocm-4.5.0
