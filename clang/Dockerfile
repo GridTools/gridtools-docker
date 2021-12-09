@@ -9,7 +9,7 @@ RUN echo "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-${CLANG_VERSION} m
     echo "deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal-${CLANG_VERSION} main" >> /etc/apt/sources.list && \
     wget -q -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
     apt-get update -qq && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -qq -y clang-${CLANG_VERSION} && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -qq -y clang-${CLANG_VERSION} libomp-${CLANG_VERSION}-dev && \
     rm -rf /var/lib/apt/lists/*
 
 ENV CXX=clang++-${CLANG_VERSION} CC=clang-${CLANG_VERSION} CUDAHOSTCXX=clang++-${CLANG_VERSION}
