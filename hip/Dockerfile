@@ -10,5 +10,5 @@ RUN wget https://repo.radeon.com/amdgpu-install/21.40/ubuntu/focal/amdgpu-instal
     amdgpu-install -y --usecase=hip --no-dkms && \
     rm -rf /var/lib/apt/lists/*
 
-ENV ROCM_PATH=/opt/rocm
+ENV ROCM_PATH=/opt/rocm-4.5.0
 ENV PATH=${ROCM_PATH}/bin:${PATH} CXX=${ROCM_PATH}/bin/hipcc
