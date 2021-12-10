@@ -91,7 +91,7 @@ jobs:
     needs: [gcc, clang, parmetis]
     strategy:
       matrix:
-        base: [gcc-10, gcc-11, clang-10, clang-11, clang-12, gcc-9-ucx-mpi-atlas-parmetis]
+        base: [gcc-10, gcc-11, clang-10, clang-11, gcc-9-ucx-mpi-atlas-parmetis]
     steps:
     - uses: actions/checkout@v2
     - name: Build
