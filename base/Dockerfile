@@ -16,8 +16,7 @@ RUN apt-get update -qq && \
     ln -s /usr/games/cowsay /usr/bin/cowsay && \
     rm -rf /var/lib/apt/lists/*
 
-# cmake version 3.16.3 is the default in ubuntu 20.04
-ARG CMAKE_VERSION=3.16.3
+ARG CMAKE_VERSION=3.22.1
 # note: source name scheme changed with version 3.20 (linux instad of Linux)
 RUN cd /tmp && \
     VNUM=$(echo ${CMAKE_VERSION} | awk -F \. {'print $1*1000+$2'}) && \
