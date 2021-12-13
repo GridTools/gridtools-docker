@@ -14,4 +14,4 @@ RUN apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive apt-get install -qq -y cuda-minimal-build-11-5 libcurand-dev-11-5 && \
     rm -rf /var/lib/apt/lists/*
 
-ENV CUDACXX=/usr/local/cuda-11.3/bin/nvcc CUDAHOSTCXX=${CXX}
+ENV CUDACXX=/usr/local/cuda-11.5/bin/nvcc CUDAHOSTCXX=${CXX}
