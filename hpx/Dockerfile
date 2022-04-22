@@ -3,7 +3,12 @@ ARG BASE
 FROM ${REPOSITORY}:${BASE}
 LABEL maintainer="Felix Thaler <thaler@cscs.ch>"
 
-ARG HPX_TAG=master
+RUN apt-get update -qq && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -qq -y \
+        libhwloc-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+ARG HPX_TAG=1.7.1
 
 RUN cd /tmp && \
     git clone --single-branch --branch ${HPX_TAG} --depth 1 https://github.com/STEllAR-GROUP/hpx.git && \
