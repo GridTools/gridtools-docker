@@ -85,6 +85,32 @@ jobs:
         docker push $CR_REPOSITORY:clang-${{ matrix.version }} &&
         docker logout ghcr.io
 
+  nvhpc:
+    runs-on: ubuntu-latest
+    needs: base
+    strategy:
+      matrix:
+        version: [21.2, 22.3]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: >
+        docker build
+        --progress=plain
+        --cache-from $CR_REPOSITORY:base
+        --cache-from $CR_REPOSITORY:nvhpc-${{ matrix.version }}
+        --build-arg BUILDKIT_INLINE_CACHE=1
+        --tag $CR_REPOSITORY:nvhpc-${{ matrix.version }}
+        --build-arg REPOSITORY=$CR_REPOSITORY
+        --build-arg NVHPC_VERSION=${{ matrix.version }}
+        nvhpc
+    - name: Push
+      if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.repository == 'GridTools/gridtools-docker' }}
+      run: >
+        echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
+        docker push $CR_REPOSITORY:nvhpc-${{ matrix.version }} &&
+        docker logout ghcr.io
+
   cuda:
     runs-on: ubuntu-latest
     needs: [gcc, clang, parmetis]
