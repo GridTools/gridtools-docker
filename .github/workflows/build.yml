@@ -90,7 +90,7 @@ jobs:
     needs: base
     strategy:
       matrix:
-        version: [21.2, 22.3]
+        version: [21.2, 22.3, 22.9]
     steps:
     - uses: actions/checkout@v2
     - name: Build
