@@ -117,6 +117,7 @@ jobs:
     strategy:
       matrix:
         base: [gcc-10, gcc-11, clang-10, clang-14, gcc-9-ucx-mpi-atlas-parmetis]
+        version: [11.8, "12.0"]
     steps:
     - uses: actions/checkout@v2
     - name: Build
@@ -125,17 +126,18 @@ jobs:
         --progress=plain
         --cache-from $CR_REPOSITORY:base
         --cache-from $CR_REPOSITORY:${{ matrix.base }}
-        --cache-from $CR_REPOSITORY:${{ matrix.base }}-cuda-11
+        --cache-from $CR_REPOSITORY:${{ matrix.base }}-cuda-${{ matrix.version }}
         --build-arg BUILDKIT_INLINE_CACHE=1
-        --tag $CR_REPOSITORY:${{ matrix.base }}-cuda-11
+        --tag $CR_REPOSITORY:${{ matrix.base }}-cuda-${{ matrix.version }}
         --build-arg REPOSITORY=$CR_REPOSITORY
         --build-arg BASE=${{ matrix.base }}
+        --build-arg CUDA_VERSION=${{ matrix.version }}
         cuda
     - name: Push
       if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.repository == 'GridTools/gridtools-docker' }}
       run: >
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
-        docker push $CR_REPOSITORY:${{ matrix.base }}-cuda-11 &&
+        docker push $CR_REPOSITORY:${{ matrix.base }}-cuda-${{ matrix.version }} &&
         docker logout ghcr.io
 
   hip:
