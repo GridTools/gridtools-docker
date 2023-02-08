@@ -38,7 +38,7 @@ jobs:
     needs: base
     strategy:
       matrix:
-        version: [8, 9, 10, 11, 12]
+        version: [9, 10, 11, 12]
     steps:
     - uses: actions/checkout@v2
     - name: Build
@@ -64,7 +64,7 @@ jobs:
     needs: base
     strategy:
       matrix:
-        version: [9, 10, 11, 12, 13, 14]
+        version: [9, 10, 11, 12, 13, 14, 15]
     steps:
     - uses: actions/checkout@v2
     - name: Build
@@ -90,7 +90,7 @@ jobs:
     needs: base
     strategy:
       matrix:
-        version: [21.2, 22.3, 22.9]
+        version: [21.2, 22.3, 22.9, 22.11, 23.1]
     steps:
     - uses: actions/checkout@v2
     - name: Build
