@@ -301,7 +301,7 @@ jobs:
         --tag $CR_REPOSITORY:${{ matrix.base }}-parmetis
         --build-arg REPOSITORY=$CR_REPOSITORY
         --build-arg BASE=${{ matrix.base }}
-        --build-arg PARMETIS_VERSION=4.0.3
+        --build-arg PARMETIS_VERSION=4.0.3-p3
         parmetis
     - name: Push
       if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.repository == 'GridTools/gridtools-docker' }}
