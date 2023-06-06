@@ -5,7 +5,7 @@ LABEL maintainer="Marco Bettiol <marco.bettiol@cscs.ch>"
 
 ARG PARMETIS_VERSION=4.0.3-p3
 RUN cd /tmp && \
-    wget -q https://www.mcs.anl.gov/petsc/mirror/externalpackages/parmetis-{PARMETIS_VERSION}.tar.gz && \
+    wget -q https://www.mcs.anl.gov/petsc/mirror/externalpackages/parmetis-${PARMETIS_VERSION}.tar.gz && \
     tar xzf parmetis-${PARMETIS_VERSION}.tar.gz && \
     cd parmetis-${PARMETIS_VERSION} && \
     sed -i 's/#define IDXTYPEWIDTH 32/#define IDXTYPEWIDTH 64/g' metis/include/metis.h && \
