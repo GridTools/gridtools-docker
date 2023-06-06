@@ -113,10 +113,10 @@ jobs:
 
   cuda:
     runs-on: ubuntu-latest
-    needs: [gcc, clang, parmetis]
+    needs: [gcc, clang] #, parmetis]
     strategy:
       matrix:
-        base: [gcc-10, gcc-11, clang-10, clang-14, gcc-9-ucx-mpi-atlas-parmetis]
+        base: [gcc-10, gcc-11, clang-10, clang-14] #, gcc-9-ucx-mpi-atlas-parmetis]
         version: [11.8, "12.0", 12.1]
     steps:
     - uses: actions/checkout@v2
@@ -142,10 +142,10 @@ jobs:
 
   hip:
     runs-on: ubuntu-latest
-    needs: [base, parmetis]
+    needs: [base] #, parmetis]
     strategy:
       matrix:
-        base: [base, gcc-9-ucx-mpi-atlas-parmetis]
+        base: [base] #, gcc-9-ucx-mpi-atlas-parmetis]
     steps:
     - uses: actions/checkout@v2
     - name: Build
