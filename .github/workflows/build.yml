@@ -113,10 +113,10 @@ jobs:
 
   cuda:
     runs-on: ubuntu-latest
-    needs: [gcc, clang] #, parmetis]
+    needs: [gcc, clang, parmetis]
     strategy:
       matrix:
-        base: [gcc-10, gcc-12, clang-10, clang-15] #, gcc-9-ucx-mpi-atlas-parmetis]
+        base: [gcc-10, gcc-12, clang-10, clang-15, gcc-9-ucx-mpi-atlas-parmetis]
         version: [11.8, "12.0", 12.1, 12.2]
     steps:
     - uses: actions/checkout@v2
@@ -142,10 +142,10 @@ jobs:
 
   hip:
     runs-on: ubuntu-latest
-    needs: [base] #, parmetis]
+    needs: [base, parmetis]
     strategy:
       matrix:
-        base: [base] #, gcc-9-ucx-mpi-atlas-parmetis]
+        base: [base, gcc-9-ucx-mpi-atlas-parmetis]
     steps:
     - uses: actions/checkout@v2
     - name: Build
@@ -279,33 +279,33 @@ jobs:
         docker push $CR_REPOSITORY:${{ matrix.base }}-atlas &&
         docker logout ghcr.io
 
-#   parmetis:
-#     runs-on: ubuntu-latest
-#     needs: atlas
-#     strategy:
-#       matrix:
-#         base: [gcc-9-ucx-mpi-atlas]
-#     steps:
-#     - uses: actions/checkout@v2
-#     - name: Build
-#       run: >
-#         docker build
-#         --progress=plain
-#         --cache-from $CR_REPOSITORY:base
-#         --cache-from $CR_REPOSITORY:gcc-9
-#         --cache-from $CR_REPOSITORY:gcc-9-ucx
-#         --cache-from $CR_REPOSITORY:gcc-9-ucx-mpi
-#         --cache-from $CR_REPOSITORY:${{ matrix.base }}
-#         --cache-from $CR_REPOSITORY:${{ matrix.base }}-parmetis
-#         --build-arg BUILDKIT_INLINE_CACHE=1
-#         --tag $CR_REPOSITORY:${{ matrix.base }}-parmetis
-#         --build-arg REPOSITORY=$CR_REPOSITORY
-#         --build-arg BASE=${{ matrix.base }}
-#         --build-arg PARMETIS_VERSION=4.0.3
-#         parmetis
-#     - name: Push
-#       if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.repository == 'GridTools/gridtools-docker' }}
-#       run: >
-#         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
-#         docker push $CR_REPOSITORY:${{ matrix.base }}-parmetis &&
-#         docker logout ghcr.io
+  parmetis:
+    runs-on: ubuntu-latest
+    needs: atlas
+    strategy:
+      matrix:
+        base: [gcc-9-ucx-mpi-atlas]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: >
+        docker build
+        --progress=plain
+        --cache-from $CR_REPOSITORY:base
+        --cache-from $CR_REPOSITORY:gcc-9
+        --cache-from $CR_REPOSITORY:gcc-9-ucx
+        --cache-from $CR_REPOSITORY:gcc-9-ucx-mpi
+        --cache-from $CR_REPOSITORY:${{ matrix.base }}
+        --cache-from $CR_REPOSITORY:${{ matrix.base }}-parmetis
+        --build-arg BUILDKIT_INLINE_CACHE=1
+        --tag $CR_REPOSITORY:${{ matrix.base }}-parmetis
+        --build-arg REPOSITORY=$CR_REPOSITORY
+        --build-arg BASE=${{ matrix.base }}
+        --build-arg PARMETIS_VERSION=4.0.3
+        parmetis
+    - name: Push
+      if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.repository == 'GridTools/gridtools-docker' }}
+      run: >
+        echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin &&
+        docker push $CR_REPOSITORY:${{ matrix.base }}-parmetis &&
+        docker logout ghcr.io
