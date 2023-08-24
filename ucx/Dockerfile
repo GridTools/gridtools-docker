@@ -21,4 +21,3 @@ RUN cd /tmp && \
     rm -rf /tmp/ucx
 
 ENV UCX_TLS=self,tcp
-
