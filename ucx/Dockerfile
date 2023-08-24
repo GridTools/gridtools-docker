@@ -10,7 +10,7 @@ RUN apt-get update -qq && \
         libnuma-dev && \
     rm -rf /var/lib/apt/lists/*
 
-ARG UCX_VERSION=1.10.1
+ARG UCX_VERSION=1.14.1
 RUN cd /tmp && \
     git clone https://github.com/openucx/ucx.git && \
     cd ucx && \
