@@ -64,7 +64,7 @@ jobs:
     needs: base
     strategy:
       matrix:
-        version: [13, 14, 15, 16]
+        version: [13, 14, 15, 16, 17]
     steps:
     - uses: actions/checkout@v2
     - name: Build
