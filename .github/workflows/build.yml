@@ -116,8 +116,8 @@ jobs:
     needs: [gcc, clang, parmetis]
     strategy:
       matrix:
-        base: [gcc-10, gcc-12, clang-10, clang-17, gcc-9-ucx-mpi-atlas-parmetis]
-        version: [11.8, 12.2, 12.3, 12.4]
+        base: [gcc-10, gcc-12, gcc-13, clang-10, clang-17, gcc-9-ucx-mpi-atlas-parmetis]
+        version: [11.8, 12.2, 12.3, 12.4, 12.5]
     steps:
     - uses: actions/checkout@v2
     - name: Build
