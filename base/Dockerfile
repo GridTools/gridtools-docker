@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 LABEL maintainer="Felix Thaler <thaler@cscs.ch>"
 
 RUN apt-get update -qq && \
