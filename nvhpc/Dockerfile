@@ -6,8 +6,8 @@ ARG NVHPC_VERSION
 ENV NVHPC_VERSION ${NVHPC_VERSION}
 
 RUN NVHPC_VERSION_DASH=$(echo ${NVHPC_VERSION} | sed 's/\./-/g') && \
-    curl https://developer.download.nvidia.com/hpc-sdk/ubuntu/DEB-GPG-KEY-NVIDIA-HPC-SDK | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-hpcsdk-archive-keyring.gpg \
-    echo 'deb [signed-by=/usr/share/keyrings/nvidia-hpcsdk-archive-keyring.gpg] https://developer.download.nvidia.com/hpc-sdk/ubuntu/amd64 /' | sudo tee /etc/apt/sources.list.d/nvhpc.list \
+    wget https://developer.download.nvidia.com/hpc-sdk/ubuntu/DEB-GPG-KEY-NVIDIA-HPC-SDK | gpg --dearmor -o /usr/share/keyrings/nvidia-hpcsdk-archive-keyring.gpg \
+    echo 'deb [signed-by=/usr/share/keyrings/nvidia-hpcsdk-archive-keyring.gpg] https://developer.download.nvidia.com/hpc-sdk/ubuntu/amd64 /' | tee /etc/apt/sources.list.d/nvhpc.list \
     apt-get update -qq -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -qq -y nvhpc-${NVHPC_VERSION_DASH} && \
     rm -rf /var/lib/apt/lists/*
