@@ -4,7 +4,9 @@ FROM ${REPOSITORY}:${BASE}
 LABEL maintainer="Felix Thaler <thaler@cscs.ch>"
 
 # from https://docs.amd.com/bundle/ROCm-Installation-Guide-v5.4/page/How_to_Install_ROCm.html
-RUN wget https://repo.radeon.com/amdgpu-install/22.40/ubuntu/jammy/amdgpu-install_5.4.50401-1_all.deb && \
+RUN add-apt-repository -y -s deb http://security.ubuntu.com/ubuntu jammy main universe && \
+    add-apt-repository ppa:deadsnakes/ppa -y && \
+    wget https://repo.radeon.com/amdgpu-install/22.40/ubuntu/jammy/amdgpu-install_5.4.50401-1_all.deb && \
     apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive apt-get install -qq -y ./amdgpu-install_5.4.50401-1_all.deb && \
     apt-get update -qq && \
