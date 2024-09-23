@@ -145,7 +145,7 @@ jobs:
     needs: [base, parmetis]
     strategy:
       matrix:
-        base: [base, gcc-9-ucx-mpi-atlas-parmetis]
+        base: [base]
     steps:
     - uses: actions/checkout@v2
     - name: Build
