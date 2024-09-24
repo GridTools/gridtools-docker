@@ -168,9 +168,9 @@ jobs:
         docker build
         --progress=plain
         --cache-from $CR_REPOSITORY:${{ matrix.base }}
-        --cache-from $CR_REPOSITORY:${{ matrix.base }}-hip
+        --cache-from $CR_REPOSITORY:${{ matrix.base }}-rocm-6.2
         --build-arg BUILDKIT_INLINE_CACHE=1
-        --tag $CR_REPOSITORY:${{ matrix.base }}-hip
+        --tag $CR_REPOSITORY:${{ matrix.base }}-rocm-6.2
         --build-arg REPOSITORY=$CR_REPOSITORY
         --build-arg BASE=${{ matrix.base }}
         hip
