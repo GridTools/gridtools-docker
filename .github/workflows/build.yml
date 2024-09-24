@@ -142,7 +142,7 @@ jobs:
 
   hip:
     runs-on: ubuntu-latest
-    needs: [base, parmetis]
+    needs: [base]
     strategy:
       matrix:
         base: [base]
