@@ -142,20 +142,26 @@ jobs:
 
   hip:
     runs-on: ubuntu-latest
-    needs: [base, parmetis]
+    needs: [base]
     strategy:
       matrix:
-        base: [base, gcc-9-ucx-mpi-atlas-parmetis]
+        base: [base]
     steps:
     - uses: actions/checkout@v2
+    - name: Free Disk Space (Ubuntu)
+      uses: jlumbroso/free-disk-space@main
+      with:
+        # this might remove tools that are actually needed,
+        # if set to "true" but frees about 6 GB
+        tool-cache: false
     - name: Build
       run: >
         docker build
         --progress=plain
         --cache-from $CR_REPOSITORY:${{ matrix.base }}
-        --cache-from $CR_REPOSITORY:${{ matrix.base }}-hip
+        --cache-from $CR_REPOSITORY:${{ matrix.base }}-rocm-6.2
         --build-arg BUILDKIT_INLINE_CACHE=1
-        --tag $CR_REPOSITORY:${{ matrix.base }}-hip
+        --tag $CR_REPOSITORY:${{ matrix.base }}-rocm-6.2
         --build-arg REPOSITORY=$CR_REPOSITORY
         --build-arg BASE=${{ matrix.base }}
         hip
