@@ -93,6 +93,12 @@ jobs:
         version: [24.5]
     steps:
     - uses: actions/checkout@v2
+    - name: Free Disk Space (Ubuntu)
+      uses: jlumbroso/free-disk-space@main
+      with:
+        # this might remove tools that are actually needed,
+        # if set to "true" but frees about 6 GB
+        tool-cache: false
     - name: Build
       run: >
         docker build
