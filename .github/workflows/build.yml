@@ -90,7 +90,7 @@ jobs:
     needs: base
     strategy:
       matrix:
-        version: [24.5]
+        version: [24.5, 24.11]
     steps:
     - uses: actions/checkout@v2
     - name: Free Disk Space (Ubuntu)
