@@ -18,7 +18,7 @@ RUN apt-get update -qq && \
 ARG BOOST_VERSION=1.79.0
 RUN cd /tmp && \
     BOOST_VERSION_UNDERLINE=$(echo ${BOOST_VERSION} | sed 's/\./_/g') && \
-    wget https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VERSION}/source/boost_${BOOST_VERSION_UNDERLINE}.tar.gz && \
+    wget https://archives.boost.io/release/${BOOST_VERSION}/source/boost_${BOOST_VERSION_UNDERLINE}.tar.gz && \
     tar xzf boost_${BOOST_VERSION_UNDERLINE}.tar.gz && \
     cd boost_${BOOST_VERSION_UNDERLINE} && \
     ./bootstrap.sh && \
